@@ -1,0 +1,39 @@
+# Core dependencies for Linux Server Auditor
+
+# System monitoring and process management
+psutil>=5.9.0
+
+# Configuration and data handling
+PyYAML>=6.0
+jsonschema>=4.17.0
+
+# Template rendering for reports
+Jinja2>=3.1.0
+
+# Markdown processing
+Markdown>=3.4.0
+
+# Date and time handling
+python-dateutil>=2.8.2
+
+# Network utilities
+ipaddress>=1.0.23
+
+# Cryptography for security checks
+cryptography>=38.0.0
+
+# Optional: For enhanced terminal output
+colorama>=0.4.6
+
+# Optional: For PDF report generation
+reportlab>=3.6.0
+
+# Optional: For advanced data analysis
+pandas>=1.5.0
+numpy>=1.23.0
+
+# Optional: For network scanning
+python-nmap>=0.6.1
+
+# Optional: For system information
+distro>=1.7.0

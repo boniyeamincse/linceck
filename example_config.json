@@ -1,0 +1,178 @@
+{
+    "version": "1.0",
+    "modules": {
+        "enabled": [
+            "system",
+            "users",
+            "files",
+            "services",
+            "network",
+            "security",
+            "logs",
+            "cron",
+            "ssh"
+        ],
+        "timeout": 300,
+        "parallel_execution": true,
+        "retry_attempts": 2
+    },
+    "scoring": {
+        "module_weights": {
+            "security": 1.5,
+            "ssh": 1.3,
+            "users": 1.2,
+            "system": 1.1,
+            "network": 1.0,
+            "services": 0.9,
+            "files": 0.8,
+            "logs": 0.7,
+            "cron": 0.6
+        },
+        "severity_weights": {
+            "critical": 2.0,
+            "high": 1.5,
+            "medium": 1.0,
+            "low": 0.5
+        },
+        "grade_thresholds": {
+            "A": 90,
+            "B": 80,
+            "C": 70,
+            "D": 60
+        }
+    },
+    "output": {
+        "formats": ["html", "txt"],
+        "report_dir": "./reports",
+        "template_dir": "./templates",
+        "include_details": true,
+        "include_recommendations": true,
+        "compress_large_outputs": true
+    },
+    "security": {
+        "max_failed_login_attempts": 5,
+        "password_min_length": 8,
+        "password_min_complexity": 3,
+        "max_file_permissions": 644,
+        "max_directory_permissions": 755,
+        "critical_services": ["sshd", "httpd", "nginx"],
+        "required_packages": ["fail2ban", "auditd", "firewalld"],
+        "max_inactive_days": 90,
+        "max_password_age": 90,
+        "min_uid": 1000,
+        "check_duplicate_uids": true,
+        "check_duplicate_gids": true,
+        "require_strong_ssh_keys": true,
+        "check_sudo_configuration": true
+    },
+    "compliance": {
+        "framework": "nist",
+        "benchmark_file": "nist_benchmarks.json",
+        "strict_mode": false,
+        "nist_controls": {
+            "AC-2": {
+                "description": "Account Management",
+                "enabled": true,
+                "checks": [
+                    "user_account_enumeration",
+                    "password_policy_compliance",
+                    "account_lockout_settings",
+                    "sudo_configuration"
+                ]
+            },
+            "IA-5": {
+                "description": "Authenticator Management",
+                "enabled": true,
+                "checks": [
+                    "password_complexity",
+                    "password_history",
+                    "ssh_key_management"
+                ]
+            },
+            "CM-6": {
+                "description": "Configuration Settings",
+                "enabled": true,
+                "checks": [
+                    "system_configuration",
+                    "service_configuration",
+                    "file_permissions"
+                ]
+            }
+        }
+    },
+    "logging": {
+        "level": "INFO",
+        "file": "./logs/auditor.log",
+        "max_size": "10MB",
+        "backup_count": 5,
+        "format": "%(asctime)s - %(name)s - %(levelname)s - %(module)s - %(message)s",
+        "date_format": "%Y-%m-%d %H:%M:%S"
+    },
+    "network": {
+        "check_open_ports": true,
+        "check_firewall_rules": true,
+        "check_dns_configuration": true,
+        "check_network_interfaces": true,
+        "trusted_networks": [
+            "192.168.0.0/16",
+            "10.0.0.0/8",
+            "172.16.0.0/12"
+        ],
+        "blocked_ports": [23, 25, 135, 139, 445, 1433, 3389],
+        "allowed_protocols": ["tcp", "udp"]
+    },
+    "ssh": {
+        "check_configuration": true,
+        "check_key_strength": true,
+        "check_access_controls": true,
+        "allowed_ciphers": [
+            "aes256-ctr",
+            "aes192-ctr",
+            "aes128-ctr"
+        ],
+        "allowed_kex_algorithms": [
+            "curve25519-sha256",
+            "diffie-hellman-group-exchange-sha256"
+        ],
+        "max_auth_tries": 3,
+        "permit_root_login": false,
+        "protocol_version": 2
+    },
+    "performance": {
+        "max_execution_time": 300,
+        "memory_limit": "512MB",
+        "enable_caching": true,
+        "cache_ttl": 3600,
+        "parallel_workers": 4
+    },
+    "reporting": {
+        "include_executive_summary": true,
+        "include_technical_details": true,
+        "include_recommendations": true,
+        "include_compliance_mapping": true,
+        "generate_charts": true,
+        "chart_types": ["pie", "bar", "gauge"],
+        "include_raw_data": false,
+        "anonymize_sensitive_data": false
+    },
+    "alerts": {
+        "enable_email_notifications": false,
+        "email_recipients": [],
+        "smtp_server": "",
+        "smtp_port": 587,
+        "smtp_username": "",
+        "smtp_password": "",
+        "alert_on_critical_issues": true,
+        "alert_on_high_issues": false,
+        "alert_frequency": "immediate"
+    },
+    "integration": {
+        "enable_api": false,
+        "api_port": 8080,
+        "api_key": "",
+        "enable_webhook": false,
+        "webhook_url": "",
+        "webhook_secret": "",
+        "export_formats": ["json", "xml", "csv"]
+    }
+}
